@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<context:component-scan
+		base-package="com.spring.test" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/</value> <!-- "/" means inside web-app -->
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<bean id="dao" class="com.spring.test.daoimpl.EmployeeDaoImpl"></bean>
+	<!-- <bean id="dao" class="com.spring.test.daoimpl.EmployeeDaoJdbcImpl"></bean> -->
+
+	<!-- <bean id="emp" class="com.spring.test.pojo.Employee"> <constructor-arg 
+		value="Dhoni"> </constructor-arg> <constructor-arg value="500000"> </constructor-arg> 
+		<property name="mbl" value="Idea"></property> <property name="pport" ref="passport"></property> 
+		</bean> -->
+
+	<bean id="emp" class="com.spring.test.pojo.Employee"
+		lazy-init="true">
+	</bean>
+
+	<!-- <bean id="emp" class="com.spring.test.pojo.Employee" scope="prototype"> 
+		<constructor-arg ref="passport"></constructor-arg> </bean> -->
+	<bean id="passport" name="pport"
+		class="com.spring.test.pojo.Passport" scope="prototype"></bean>
+	<bean class="com.spring.test.service.EmployeeService"></bean>
+
+	<bean class="com.spring.test.dao.TestIocDao"></bean>
+
+	<bean name="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/test"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="anil9866@Kumar"></property>
+	</bean>
+
+</beans>
